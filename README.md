@@ -1,1 +1,1 @@
-# Segementation-of-OCT-Scan-Images
+# Segmentation-of-OCT-Scan-Images
