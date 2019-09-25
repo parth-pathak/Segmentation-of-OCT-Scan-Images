@@ -3,6 +3,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 from crop import cropImage
 from weightFunc import calculateWeight
+from waverec import wr
 from time import time
 
 input_img = cv2.imread('Dataset\\AMD_patient1\\88E4C0.tif', 0)
@@ -19,9 +20,11 @@ gaussian_img = cv2.GaussianBlur(img,(7,7), 75)
 t5 = time()
 bilateral_img = cv2.bilateralFilter(img, 7, 75, 75)
 t6 = time()
+wavelet_img = wr(img, 'db1', 10)
+t7 = time()
 
 wt = calculateWeight(img)
-t7 = time()
+t8 = time()
 
 #mask = np.reciprocal(wt)
 #res = cv2.inpaint(img,np.uint8(mask),1,cv2.INPAINT_TELEA)
@@ -30,11 +33,14 @@ print('Resize time: '+str(t3-t2))
 print('NLMeans time: '+str(t4-t3))
 print('Gaussian time: '+str(t5-t4))
 print('Bilateral time: '+str(t6-t5))
-print('Weighting time: '+str(t7-t6))
+print('WavRec time: '+str(t7-t6))
+print('Weighting time: '+str(t8-t7))
 
-plt.subplot(2,2,1),plt.imshow(img, cmap='gray'),plt.title('Cropped & resized'),plt.xticks([])
-plt.subplot(2,2,2),plt.imshow(nl_img, cmap='gray'),plt.title('Non local means'),plt.xticks([])
-plt.subplot(2,2,3),plt.imshow(gaussian_img, cmap='gray'),plt.title('Gaussian'),plt.xticks([])
-plt.subplot(2,2,4),plt.imshow(bilateral_img, cmap='gray'),plt.title('Bilateral'),plt.xticks([])
+plt.subplot(3,2,1),plt.imshow(img, cmap='gray'),plt.title('Cropped & resized'),plt.xticks([])
+plt.subplot(3,2,2),plt.imshow(nl_img, cmap='gray'),plt.title('Non local means'),plt.xticks([])
+plt.subplot(3,2,3),plt.imshow(gaussian_img, cmap='gray'),plt.title('Gaussian'),plt.xticks([])
+plt.subplot(3,2,4),plt.imshow(bilateral_img, cmap='gray'),plt.title('Bilateral'),plt.xticks([])
+plt.subplot(3,2,5),plt.imshow(wavelet_img, cmap='gray'),plt.title('WavRec'),plt.xticks([])
+plt.subplot(3,2,6),plt.imshow(wt, cmap='gray'),plt.title('Weighted'),plt.xticks([])
  
 plt.show()
