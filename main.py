@@ -5,7 +5,7 @@ from crop import cropImage
 from weightFunc import calculateWeight
 from time import time
 
-input_img = cv2.imread('C:\\Users\\dell\\Downloads\\amd_patients\\AMD_patient1\\88E4C0.tif', 0)
+input_img = cv2.imread('Dataset\\AMD_patient1\\88E4C0.tif', 0)
 t1 = time()
 img = cropImage(input_img)
 t2 = time()
@@ -13,11 +13,11 @@ size = img.shape
 img = cv2.resize(img, (size[1]*2,size[0]*2), interpolation = cv2.INTER_AREA)
 t3 = time()
 
-nl_img = cv2.fastNlMeansDenoising(img,None,10,5,21)
+nl_img = cv2.fastNlMeansDenoising(img,None,10,7,21)
 t4 = time()
-gaussian_img = cv2.GaussianBlur(img,(5,5), 75)
+gaussian_img = cv2.GaussianBlur(img,(7,7), 75)
 t5 = time()
-bilateral_img = cv2.bilateralFilter(img, 5, 75, 75)
+bilateral_img = cv2.bilateralFilter(img, 7, 75, 75)
 t6 = time()
 
 wt = calculateWeight(img)
