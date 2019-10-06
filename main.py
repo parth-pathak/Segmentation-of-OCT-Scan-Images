@@ -4,43 +4,28 @@ from matplotlib import pyplot as plt
 from crop import cropImage
 from weightFunc import calculateWeight
 from waverec import wr
+from enhance import LAT
 from time import time
 
 input_img = cv2.imread('Dataset\\AMD_patient1\\88E4C0.tif', 0)
 t1 = time()
-img = cropImage(input_img)
+crop_img = cropImage(input_img)
 t2 = time()
-size = img.shape
-img = cv2.resize(img, (size[1]*2,size[0]*2), interpolation = cv2.INTER_AREA)
+nl_img = cv2.fastNlMeansDenoising(crop_img,None,15,7,21)
 t3 = time()
-
-nl_img = cv2.fastNlMeansDenoising(img,None,10,7,21)
+thresh = LAT(nl_img)
 t4 = time()
-gaussian_img = cv2.GaussianBlur(img,(7,7), 75)
+wt = calculateWeight(thresh)
 t5 = time()
-bilateral_img = cv2.bilateralFilter(img, 7, 75, 75)
-t6 = time()
-wavelet_img = wr(img, 'db1', 10)
-t7 = time()
+#res = cv2.inpaint(thresh,wt,1,cv2.INPAINT_TELEA)
 
-wt = calculateWeight(img)
-t8 = time()
+print('Crop:  '+str(t2-t1)+' s')
+print('Denoising: '+str(t3-t2)+' s')
+print('LAT: '+str(t4-t3)+' s')
+print('Weight: '+str(t5-t4)+' s')
 
-#mask = np.reciprocal(wt)
-#res = cv2.inpaint(img,np.uint8(mask),1,cv2.INPAINT_TELEA)
-print('Crop time: '+str(t2-t1))
-print('Resize time: '+str(t3-t2))
-print('NLMeans time: '+str(t4-t3))
-print('Gaussian time: '+str(t5-t4))
-print('Bilateral time: '+str(t6-t5))
-print('WavRec time: '+str(t7-t6))
-print('Weighting time: '+str(t8-t7))
+plt.subplot(2,2,1),plt.imshow(nl_img, cmap='gray'),plt.title('Crop and Denoise'),plt.xticks([])
+plt.subplot(2,2,2),plt.imshow(thresh, cmap='gray'),plt.title('LAT'),plt.xticks([])
+plt.subplot(2,2,3),plt.imshow(wt, cmap='gray'),plt.title('Weighted'),plt.xticks([])
 
-plt.subplot(3,2,1),plt.imshow(img, cmap='gray'),plt.title('Cropped & resized'),plt.xticks([])
-plt.subplot(3,2,2),plt.imshow(nl_img, cmap='gray'),plt.title('Non local means'),plt.xticks([])
-plt.subplot(3,2,3),plt.imshow(gaussian_img, cmap='gray'),plt.title('Gaussian'),plt.xticks([])
-plt.subplot(3,2,4),plt.imshow(bilateral_img, cmap='gray'),plt.title('Bilateral'),plt.xticks([])
-plt.subplot(3,2,5),plt.imshow(wavelet_img, cmap='gray'),plt.title('WavRec'),plt.xticks([])
-plt.subplot(3,2,6),plt.imshow(wt, cmap='gray'),plt.title('Weighted'),plt.xticks([])
- 
 plt.show()
