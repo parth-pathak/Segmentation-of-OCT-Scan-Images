@@ -1,0 +1,8 @@
+setup.py
+fast_sweeping/__init__.py
+fast_sweeping.egg-info/PKG-INFO
+fast_sweeping.egg-info/SOURCES.txt
+fast_sweeping.egg-info/dependency_links.txt
+fast_sweeping.egg-info/not-zip-safe
+fast_sweeping.egg-info/requires.txt
+fast_sweeping.egg-info/top_level.txt
