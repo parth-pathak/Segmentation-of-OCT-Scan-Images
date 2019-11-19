@@ -19,7 +19,7 @@ t1 = time()
 print('Imread:  '+str(t1-t0)+' s')
 crop_img = cropImage(input_img)
 size = crop_img.shape
-crop_img = cv2.resize(crop_img, (size[1]//10, size[0]//10), interpolation = cv2.INTER_AREA)
+crop_img = cv2.resize(crop_img, (size[1]//9, size[0]//9), interpolation = cv2.INTER_AREA)
 size = crop_img.shape
 sys.setrecursionlimit(max(1000, size[0]*size[1] + 1))
 print(sys.getrecursionlimit())
@@ -40,11 +40,6 @@ print('Weight: '+str(t5-t4)+' s')
 #res = cv2.inpaint(thresh,wt,1,cv2.INPAINT_TELEA)
 res = geodesic.detectBoundary(wt)
 #img = color.color(res, crop_img)
-img = np.zeros((size[0], size[1]+2))
-b = [size[0]-1,size[1]+1]
-#while b!=[0,0]:
-#    img[b[0]][b[1]] = 255
-#    b = res[0][b[0]][b[1]]
 t6 = time()
 
 print('Boundary: '+str(t6-t5)+' s')
@@ -54,6 +49,6 @@ print()
 plt.subplot(2,2,1),plt.imshow(crop_img, cmap='gray'),plt.title('Crop'),plt.xticks([])
 plt.subplot(2,2,2),plt.imshow(thresh, cmap='gray'),plt.title('LAT'),plt.xticks([])
 plt.subplot(2,2,3),plt.imshow(res[1], cmap='gray'),plt.title('Geodesic'),plt.xticks([])
-plt.subplot(2,2,4),plt.imshow(img, cmap='gray'),plt.title('Boundary'),plt.xticks([])
+plt.subplot(2,2,4),plt.imshow(nl_img, cmap='gray'),plt.title('Boundary'),plt.xticks([])
 
 plt.show()
