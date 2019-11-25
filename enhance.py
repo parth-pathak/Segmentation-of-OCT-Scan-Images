@@ -2,7 +2,7 @@ import numpy as np
 import cv2
 import norm
 
-WS = 101
+WS = 51
 C = 0.01
 def LAT(img):
     size = img.shape

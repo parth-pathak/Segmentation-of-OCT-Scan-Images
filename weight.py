@@ -21,7 +21,7 @@ def bright2dark(img):
     dx = np.add(255, delx(img, size))/510
     dy = np.add(255, np.absolute(dely(img, size)))/510
     
-    wt = np.multiply(-10, np.subtract(1, dx))
+    wt = np.multiply(-4, np.subtract(1, dx))
     for i in range(size[0]):
         for j in range(size[1]):
             wt[i][j] = wt[i][j]*dy[i][j]
