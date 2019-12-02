@@ -52,8 +52,6 @@ def gradientFlow(D):
     rcs = np.zeros(size)
     while gamma!=s1:
         rcs[gamma[0]][gamma[1]] = 255
-        if gamma[0]!=0:
-            rcs[gamma[0]-1][gamma[1]] = 255
         G = gradient(D, size)
         gamma[0] = gamma[0] - (h*G[0])
         gamma[1] = gamma[1] - (h*G[1])

@@ -6,14 +6,14 @@ from enhance import LAT
 from distance2 import fastsweeping
 from flow import gradientFlow
 
-def detect(is_os, img, wt, size):
+def detect(inl_opl, onl_is, img, wt, size):
     flag = 0
     temp = np.zeros(size)
     for j in range(size[1]):
-        for i in range(size[0]):
-            if i+15<size[0] and is_os[i+15][j]>0:
+        for i in range(1, size[0]):
+            if inl_opl[i-1][j]>0:
                 flag = 1
-            if is_os[i][j]>0:
+            if onl_is[i][j]>0:
                 flag = 0
             temp[i][j] = flag*wt[i][j]
     

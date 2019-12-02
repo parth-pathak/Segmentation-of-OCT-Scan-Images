@@ -3,7 +3,7 @@ import numpy as np
 from detection import detectEdge
 from enhance import LAT
 count = 0
-def overlap(nl_img, size, is_os, ilm):
+def overlap(nl_img, size, is_os, ilm, onl_is, inl_opl, rpe_ch, opl_onl, os_rpe, ipl_inl, rnfl):
     rgb = cv2.cvtColor(nl_img, cv2.COLOR_GRAY2RGB)
     rc, gc, bc = cv2.split(rgb)
     for i in range(size[0]):
@@ -16,6 +16,34 @@ def overlap(nl_img, size, is_os, ilm):
                 rc[i][j] = 0
                 gc[i][j] = 255
                 bc[i][j] = 0
+            elif onl_is[i][j]>0:
+                rc[i][j] = 0
+                gc[i][j] = 255
+                bc[i][j] = 255
+            elif inl_opl[i][j]>0:
+                rc[i][j] = 255
+                gc[i][j] = 255
+                bc[i][j] = 0
+            elif rpe_ch[i][j]>0:
+                rc[i][j] = 0
+                gc[i][j] = 0
+                bc[i][j] = 255
+            elif opl_onl[i][j]>0:
+                rc[i][j] = 255
+                gc[i][j] = 0
+                bc[i][j] = 255
+            elif os_rpe[i][j]>0:
+                rc[i][j] = 0
+                gc[i][j] = 127
+                bc[i][j] = 0
+            elif ipl_inl[i][j]>0:
+                rc[i][j] = 0
+                gc[i][j] = 127
+                bc[i][j] = 255
+            elif rnfl[i][j]>0:
+                rc[i][j] = 63
+                gc[i][j] = 127
+                bc[i][j] = 127
             else:
                 rc[i][j] = max(rc[i][j], is_os[i][j])
                 gc[i][j] = max(gc[i][j], is_os[i][j])
