@@ -49,16 +49,11 @@ def gradientFlow(D):
     gamma = [size[0]-1, size[1]-1]
     s1 = [0, 0]
     h = 0.8
-    rc = np.zeros(size)
-    gc = np.zeros(size)
-    bc = np.zeros(size)
-    r = random.randrange(0, 256, 4)
-    g = random.randrange(0, 256, 4)
-    b = random.randrange(0, 256, 4)
+    rcs = np.zeros(size)
     while gamma!=s1:
-        rc[gamma[0]][gamma[1]] = 255
-        gc[gamma[0]][gamma[1]] = 255
-        bc[gamma[0]][gamma[1]] = 0
+        rcs[gamma[0]][gamma[1]] = 255
+        if gamma[0]!=0:
+            rcs[gamma[0]-1][gamma[1]] = 255
         G = gradient(D, size)
         gamma[0] = gamma[0] - (h*G[0])
         gamma[1] = gamma[1] - (h*G[1])
@@ -68,6 +63,5 @@ def gradientFlow(D):
             gamma[0] = 0
         if gamma[1]<0:
             gamma[1] = 0
-    
-    img_rgba = cv2.merge((rc, gc, bc))
-    return img_rgba
+    rcs = rcs[:,1:size[1]-1]
+    return rcs

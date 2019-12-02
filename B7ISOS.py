@@ -20,5 +20,4 @@ def detect(nl_img, size):
     D = fastsweeping(W, (size[0], size[1]+2), s1, s2)
     res = gradientFlow(D)
 
-    res = res[:,1:size[1]-1]
     return res

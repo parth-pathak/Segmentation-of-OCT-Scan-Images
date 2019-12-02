@@ -3,6 +3,26 @@ import numpy as np
 from detection import detectEdge
 from enhance import LAT
 count = 0
+def overlap(nl_img, size, is_os, ilm):
+    rgb = cv2.cvtColor(nl_img, cv2.COLOR_GRAY2RGB)
+    rc, gc, bc = cv2.split(rgb)
+    for i in range(size[0]):
+        for j in range(size[1]):
+            if is_os[i][j]>0:
+                rc[i][j] = 255
+                gc[i][j] = 0
+                bc[i][j] = 0
+            elif ilm[i][j]>0:
+                rc[i][j] = 0
+                gc[i][j] = 255
+                bc[i][j] = 0
+            else:
+                rc[i][j] = max(rc[i][j], is_os[i][j])
+                gc[i][j] = max(gc[i][j], is_os[i][j])
+                bc[i][j] = max(bc[i][j], is_os[i][j])
+    res = cv2.merge((rc, gc, bc))
+    return res
+
 def createEdge(img, thresh, idx):
     global count
     count += 1

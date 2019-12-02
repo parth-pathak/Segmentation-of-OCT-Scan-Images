@@ -6,17 +6,20 @@ from enhance import LAT
 from distance2 import fastsweeping
 from flow import gradientFlow
 
-def detect(is_os, img, size):
-    rc, gc, bc = cv2.split(is_os)
-    
-    temp = img
+def detect(is_os, ilm, img, size):
+    temp = np.zeros(size)
     for j in range(size[1]):
         for i in range(size[0]):
-            if rc[i][j]>0 or gc[i][j]>0 or bc[i][j]>0:
+            if ilm[i][j]>0:
                 break
-            temp[i][j] = 0
+            temp[i][j] = img[i][j]
+    for j in range(size[1]):
+        for i in range(size[0]-1, 0, -1):
+            if is_os[i][j]>0:
+                break
+            temp[i][j] = img[i][j]
     
-    wt = weight.dark2bright(temp)
+    wt = weight.bright2dark(temp)
     
     W = np.ones((size[0], size[1]+2))
     for i in range(size[0]):
