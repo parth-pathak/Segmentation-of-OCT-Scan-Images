@@ -5,13 +5,14 @@ import weight
 from enhance import LAT
 from distance2 import fastsweeping
 from flow import gradientFlow
+from matplotlib import pyplot as plt
 
 def detect(is_os, img, wt, size):
     flag = 0
     temp = np.zeros(size)
     for j in range(size[1]):
         for i in range(size[0]):
-            if i+15<size[0] and is_os[i+15][j]>0:
+            if i+8<size[0] and is_os[i+8][j]>0:
                 flag = 1
             if is_os[i][j]>0:
                 flag = 0

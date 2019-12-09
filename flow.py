@@ -48,7 +48,7 @@ def gradientFlow(D):
     res = []
     gamma = [size[0]-1, size[1]-1]
     s1 = [0, 0]
-    h = 0.8
+    h = 0.1
     rcs = np.zeros(size)
     while gamma!=s1:
         rcs[gamma[0]][gamma[1]] = 255

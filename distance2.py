@@ -19,6 +19,8 @@ def update(W, size, i, j):
         UV = U[i][j-1]
     else:
         UV = min(U[i][j-1], U[i][j+1])
+    if W[i][j]==0:
+        W[i][j] += 0.001
 
     if abs(UH - UV)<(h/W[i][j]):
         val1 = math.pow(UH,2)+math.pow(UV,2)-math.pow(h/W[i][j],2)

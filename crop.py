@@ -10,7 +10,7 @@ def cropImage(img):
         a = 0
         b = size[1]-1
         while a<b:
-            if img[mid][a]>=150 or img[mid][b]>=150:
+            if img[mid][a]>=100 or img[mid][b]>=100:
                 flag = 1
                 break
             a += 1
@@ -55,4 +55,4 @@ def cropImage(img):
         high = size[0]-1
     idxb = high
     
-    return img[idxt:idxb,:]
+    return (img[idxt:idxb,:size[1]//2], img[idxt:idxb,size[1]//2:])

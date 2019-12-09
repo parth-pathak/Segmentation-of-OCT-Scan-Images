@@ -5,6 +5,7 @@ import weight
 from enhance import LAT
 from distance2 import fastsweeping
 from flow import gradientFlow
+from matplotlib import pyplot as plt
 
 def detect(is_os, img, wt, size):
     temp = np.zeros(size)

@@ -5,13 +5,14 @@ import weight
 from enhance import LAT
 from distance2 import fastsweeping
 from flow import gradientFlow
+from matplotlib import pyplot as plt
 
 def detect(ilm, onl_is, img, wt, size):
     flag = 0
     temp = np.zeros(size)
     for j in range(size[1]):
         for i in range(1, size[0]):
-            if ilm[i-5][j]>0:
+            if ilm[i-10][j]>0:
                 flag = 1
             if onl_is[i][j]>0:
                 flag = 0
