@@ -6,29 +6,34 @@ def cropImage(img):
     prev = 0
     while low < high:
         mid = (low+high)//2
+        print(mid)
         flag = 0
         a = 0
         b = size[1]-1
         while a<b:
             if img[mid][a]>=100 or img[mid][b]>=100:
                 flag = 1
+                print([a, b], end=" ")
                 break
             a += 1
             b -= 1
         if flag==1:
             high = mid
+            print('high changed')
         else:
             low = mid
+            print('low changed')
         if prev==mid:
             break
         else:
             prev = mid
+    print(low)
     low -= 20
     if low<0:
         low = 0
     idxt = low
 
-    low = 0
+    low = low+20
     high = size[0]-1
     prev = 0
     while low < high:
@@ -54,5 +59,4 @@ def cropImage(img):
     if high>=size[0]:
         high = size[0]-1
     idxb = high
-    
-    return (img[idxt:idxb,:size[1]//2], img[idxt:idxb,size[1]//2:])
+    return img[idxt:idxb,:]

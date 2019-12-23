@@ -42,24 +42,46 @@ def gradient(D, size):
     
     return g
 
-def gradientFlow(D):
+def gradientFlow(D, s1, s2):
     global gamma
     size = D.shape
     res = []
-    gamma = [size[0]-1, size[1]-1]
-    s1 = [0, 0]
+    gamma = s2
+    flag = s2[1]
     h = 0.1
     rcs = np.zeros(size)
+    prev = gamma
     while gamma!=s1:
         rcs[gamma[0]][gamma[1]] = 255
         G = gradient(D, size)
         gamma[0] = gamma[0] - (h*G[0])
         gamma[1] = gamma[1] - (h*G[1])
-        gamma[0] = math.floor(gamma[0])
-        gamma[1] = math.floor(gamma[1])
+        if gamma[0]<=prev[0]:
+            gamma[0] = math.floor(gamma[0])
+        else:
+            gamma[0] = math.ceil(gamma[0])
+        if flag==0:
+            if gamma[1]<prev[1]:
+                gamma[1] = math.floor(gamma[1])
+            else:
+                gamma[1] = math.ceil(gamma[1])
+        else:
+            if gamma[1]<=prev[1]:
+                gamma[1] = math.floor(gamma[1])
+            else:
+                gamma[1] = math.ceil(gamma[1])
         if gamma[0]<0:
             gamma[0] = 0
+        elif gamma[0]>=size[0]:
+            gamma[0] = size[0]-1
         if gamma[1]<0:
             gamma[1] = 0
+        elif gamma[1]>=size[1]:
+            gamma[1] = size[1]-1
+            '''
+        if gamma==prev:
+            break
+        '''
+        prev = gamma
     rcs = rcs[:,1:size[1]-1]
     return rcs

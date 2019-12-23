@@ -37,22 +37,41 @@ def fastsweeping(W, size, s1, s2):
 
     U[s1[0]][s1[1]] = 0
     label[s1[0]][s1[1]] = 1
-    
-    for i in range(size[0]):
-        for j in range(size[1]):
-            if label[i][j]==0:
-                U[i][j] = min(U[i][j], update(W, size, i, j))
-    for i in range(size[0]):
-        for j in range(size[1]-1, -1, -1):
-            if label[i][j]==0:
-                U[i][j] = min(U[i][j], update(W, size, i, j))
-    for i in range(size[0]-1, -1, -1):
-        for j in range(size[1]-1, -1, -1):
-            if label[i][j]==0:
-                U[i][j] = min(U[i][j], update(W, size, i, j))
-    for i in range(size[0]-1, -1, -1):
-        for j in range(size[1]):
-            if label[i][j]==0:
-                U[i][j] = min(U[i][j], update(W, size, i, j))
+
+    flag = s2[1]
+    if flag!=0:
+        for i in range(size[0]):
+            for j in range(size[1]):
+                if label[i][j]==0:
+                    U[i][j] = min(U[i][j], update(W, size, i, j))
+        for i in range(size[0]):
+            for j in range(size[1]-1, -1, -1):
+                if label[i][j]==0:
+                    U[i][j] = min(U[i][j], update(W, size, i, j))
+        for i in range(size[0]-1, -1, -1):
+            for j in range(size[1]-1, -1, -1):
+                if label[i][j]==0:
+                    U[i][j] = min(U[i][j], update(W, size, i, j))
+        for i in range(size[0]-1, -1, -1):
+            for j in range(size[1]):
+                if label[i][j]==0:
+                    U[i][j] = min(U[i][j], update(W, size, i, j))
+    else:
+        for i in range(size[0]):
+            for j in range(size[1]-1, -1, -1):
+                if label[i][j]==0:
+                    U[i][j] = min(U[i][j], update(W, size, i, j))
+        for i in range(size[0]):
+            for j in range(size[1]):
+                if label[i][j]==0:
+                    U[i][j] = min(U[i][j], update(W, size, i, j))
+        for i in range(size[0]-1, -1, -1):
+            for j in range(size[1]):
+                if label[i][j]==0:
+                    U[i][j] = min(U[i][j], update(W, size, i, j))
+        for i in range(size[0]-1, -1, -1):
+            for j in range(size[1]-1, -1, -1):
+                if label[i][j]==0:
+                    U[i][j] = min(U[i][j], update(W, size, i, j))
     
     return U
